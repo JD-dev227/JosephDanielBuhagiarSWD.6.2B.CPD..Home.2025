@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:ichiraku/services/camera_service.dart';
 
-
 class ScanScreen extends StatefulWidget {
+  const ScanScreen({Key? key}) : super(key: key);
+
   @override
   _ScanScreenState createState() => _ScanScreenState();
 }
 
 class _ScanScreenState extends State<ScanScreen> {
-  late CameraService _cameraService;
+  final CameraService _cameraService = CameraService();
+  bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _cameraService = CameraService();
-    _cameraService.initializeCamera();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    try {
+      await _cameraService.initializeCamera();
+      setState(() {
+        _isInitialized = true;
+      });
+    } catch (e) {
+      // Show error to user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to initialize camera: $e')),
+      );
+    }
   }
 
   @override
@@ -26,18 +41,34 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Camera Scan')),
+      appBar: AppBar(title: const Text('Camera Scan')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _cameraService.buildCameraPreview(),
+            // Show loading or error state if not initialized
+            _isInitialized 
+              ? _cameraService.buildCameraPreview()
+              : const CircularProgressIndicator(),
+            
+            const SizedBox(height: 20),
+            
             ElevatedButton(
-              onPressed: () async {
-                final image = await _cameraService.captureImage();
-                print('Captured image path: ${image.path}');
-              },
-              child: Text('Capture Image'),
+              onPressed: _isInitialized 
+                ? () async {
+                    final image = await _cameraService.captureImage();
+                    if (image != null) {
+                      // Handle the captured image
+                      print('Captured image path: ${image.path}');
+                      // You might want to navigate to a preview screen or process the image
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Failed to capture image')),
+                      );
+                    }
+                  }
+                : null, // Disable button if camera not initialized
+              child: const Text('Capture Image'),
             ),
           ],
         ),

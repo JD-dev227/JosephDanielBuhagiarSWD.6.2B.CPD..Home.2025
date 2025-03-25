@@ -76,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               textAlign: TextAlign.center,
             ),
           ),
+          // Search Bar
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
@@ -99,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(height: 10),
+          // Display Loading, Error, or No Results Message
           if (_isLoading)
             CircularProgressIndicator()
           else if (_errorMessage.isNotEmpty)
@@ -127,6 +129,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+          // Scan Ingredients Button
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/scan'); // Navigate to Scan Screen
+              },
+              child: Text("Scan Ingredients"),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+            ),
+          ),
         ],
       ),
     );
