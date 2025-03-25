@@ -1,45 +1,43 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:ichiraku/services/camera_service.dart';
+
 
 class ScanScreen extends StatefulWidget {
-  const ScanScreen({super.key});
-
   @override
-  State<ScanScreen> createState() => _ScanScreenState();
+  _ScanScreenState createState() => _ScanScreenState();
 }
 
 class _ScanScreenState extends State<ScanScreen> {
-  XFile? _image;
+  late CameraService _cameraService;
 
-  Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+  @override
+  void initState() {
+    super.initState();
+    _cameraService = CameraService();
+    _cameraService.initializeCamera();
+  }
 
-    setState(() {
-      _image = image;
-    });
+  @override
+  void dispose() {
+    _cameraService.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Scan Ingredients')),
+      appBar: AppBar(title: Text('Camera Scan')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _image == null
-                ? Text("No image selected")
-                : Image.file(
-                    File(_image!.path),
-                    width: 200,
-                    height: 200,
-                  ),
+          children: <Widget>[
+            _cameraService.buildCameraPreview(),
             ElevatedButton(
-              onPressed: _pickImage,
-              child: Text("Take Picture"),
+              onPressed: () async {
+                final image = await _cameraService.captureImage();
+                print('Captured image path: ${image.path}');
+              },
+              child: Text('Capture Image'),
             ),
           ],
         ),
