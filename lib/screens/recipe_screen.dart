@@ -4,7 +4,7 @@ class RecipeScreen extends StatelessWidget {
   final String title;
   final String description;
 
-  RecipeScreen({required this.title, required this.description});
+  const RecipeScreen({super.key, required this.title, required this.description});
 
   @override
   Widget build(BuildContext context) {

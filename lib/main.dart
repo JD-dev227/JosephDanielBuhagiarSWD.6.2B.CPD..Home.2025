@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ichiraku/screens/scan.screen.dart';
 import 'screens/home_screen.dart';
-import 'screens/scan_screen.dart';
 import 'screens/recipe_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp( MyApp());
 
 class MyApp extends StatelessWidget {
   @override

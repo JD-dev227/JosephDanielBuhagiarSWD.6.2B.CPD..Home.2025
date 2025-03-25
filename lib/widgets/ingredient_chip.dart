@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class IngredientChip extends StatelessWidget {
   final String ingredient;
 
-  IngredientChip({required this.ingredient});
+  const IngredientChip({super.key, required this.ingredient});
 
   @override
   Widget build(BuildContext context) {

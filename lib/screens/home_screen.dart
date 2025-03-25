@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../widgets/recipe_card.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

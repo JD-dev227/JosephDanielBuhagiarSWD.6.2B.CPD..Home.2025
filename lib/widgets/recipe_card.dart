@@ -4,7 +4,7 @@ class RecipeCard extends StatelessWidget {
   final String title;
   final String description;
 
-  RecipeCard({required this.title, required this.description});
+  const RecipeCard({super.key, required this.title, required this.description});
 
   @override
   Widget build(BuildContext context) {
