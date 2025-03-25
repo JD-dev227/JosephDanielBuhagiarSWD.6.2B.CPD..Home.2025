@@ -1,7 +1,7 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    
     id "dev.flutter.flutter-gradle-plugin"
 }
 
@@ -11,7 +11,7 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        // Use this syntax for core library desugaring
+        
         coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.ichiraku"
-        minSdk = flutter.minSdkVersion
+        minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
