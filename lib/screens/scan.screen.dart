@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ichiraku/services/camera_service.dart';
+import '../services/camera_service.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen({Key? key}) : super(key: key);
@@ -25,7 +25,6 @@ class _ScanScreenState extends State<ScanScreen> {
         _isInitialized = true;
       });
     } catch (e) {
-      // Show error to user
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to initialize camera: $e')),
       );
@@ -46,28 +45,24 @@ class _ScanScreenState extends State<ScanScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // Show loading or error state if not initialized
             _isInitialized 
               ? _cameraService.buildCameraPreview()
               : const CircularProgressIndicator(),
-            
             const SizedBox(height: 20),
-            
             ElevatedButton(
               onPressed: _isInitialized 
                 ? () async {
                     final image = await _cameraService.captureImage();
                     if (image != null) {
-                      // Handle the captured image
+                      // Process or preview the captured image as needed.
                       print('Captured image path: ${image.path}');
-                      // You might want to navigate to a preview screen or process the image
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Failed to capture image')),
                       );
                     }
                   }
-                : null, // Disable button if camera not initialized
+                : null,
               child: const Text('Capture Image'),
             ),
           ],
