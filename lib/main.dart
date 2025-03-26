@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         '/scan': (context) => ScanScreen(),
         // RecipeScreen now gets its arguments via the route settings
         '/recipe': (context) => RecipeScreen(),
-        '/gallery': (context) => GalleryScreen(),
+        '/gallery': (context) =>  const GalleryScreen(),
       },
     );
   }

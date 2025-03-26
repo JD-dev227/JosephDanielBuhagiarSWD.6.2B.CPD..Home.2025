@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _searchController.dispose();
     super.dispose();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,6 +151,16 @@ class _HomeScreenState extends State<HomeScreen> {
               style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 214, 114, 7)),
             ),
           ),
+          Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/gallery');
+                },
+                child: const Text("View Captured Meals"),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+              ),
+           ),
         ],
       ),
     );

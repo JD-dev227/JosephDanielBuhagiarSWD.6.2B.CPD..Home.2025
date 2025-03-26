@@ -20,35 +20,25 @@ class CameraService {
     await _controller!.initialize();
   }
 
-  // Method to capture and save an image.
   Future<String?> captureAndSaveImage() async {
-    if (_controller == null || !_controller!.value.isInitialized) {
-      return null;
-    }
-    try {
-      final image = await _controller!.takePicture();
-      final directory = await getApplicationDocumentsDirectory();
-      final imagePath = '${directory.path}/${DateTime.now().toIso8601String()}.jpg';
-      await image.saveTo(imagePath);
-      return imagePath;
-    } catch (e) {
-      print('Error saving image: $e');
-      return null;
-    }
+  if (_controller == null || !_controller!.value.isInitialized) {
+    return null;
   }
+  try {
+    final image = await _controller!.takePicture();
+    final directory = await getApplicationDocumentsDirectory();
+    
+    final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-');
+    final imagePath = '${directory.path}/$timestamp.jpg';
+    await image.saveTo(imagePath);
+    return imagePath;
+  } catch (e) {
+    print('Error saving image: $e');
+    return null;
+  }
+}
 
-  // Method to capture an image without saving.
-  Future<XFile?> captureImage() async {
-    if (_controller == null || !_controller!.value.isInitialized) {
-      return null;
-    }
-    try {
-      return await _controller!.takePicture();
-    } catch (e) {
-      print('Error capturing image: $e');
-      return null;
-    }
-  }
+  
 
   // Method to build the camera preview.
   Widget buildCameraPreview() {
