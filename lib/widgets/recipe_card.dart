@@ -13,7 +13,7 @@ class RecipeCard extends StatelessWidget {
       elevation: 4.0,
       child: ListTile(
         title: Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        subtitle: Text(description),
+       // subtitle: Text(description),
         onTap: () {
           // Navigate to the Recipe Screen with details
           Navigator.pushNamed(

@@ -140,14 +140,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          // Scan Ingredients Button
+      
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/scan');
               },
-              child: Text("Scan Ingredients"),
+              child: Text("Capture Meals"),
               style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 214, 114, 7)),
             ),
           ),
