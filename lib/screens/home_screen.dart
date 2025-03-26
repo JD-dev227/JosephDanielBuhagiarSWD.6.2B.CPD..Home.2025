@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "What’s in your fridge? Let’s find a recipe!",
+              "What’s in your mind?",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
