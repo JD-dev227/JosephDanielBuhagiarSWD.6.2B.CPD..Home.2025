@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pushNamed(context, '/scan');
               },
               child: Text("Scan Ingredients"),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 214, 114, 7)),
             ),
           ),
         ],

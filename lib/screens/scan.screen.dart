@@ -49,12 +49,16 @@ class _ScanScreenState extends State<ScanScreen> {
               ? _cameraService.buildCameraPreview()
               : const CircularProgressIndicator(),
             const SizedBox(height: 20),
-            ElevatedButton(
+          ElevatedButton(
               onPressed: _isInitialized 
                 ? () async {
                     final image = await _cameraService.captureImage();
                     if (image != null) {
-                      // Process or preview the captured image as needed.
+                      // Optionally, you can use the captureAndSaveImage method if you want to store it
+                      // final imagePath = await _cameraService.captureAndSaveImage();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Image captured at: ${image.path}')),
+                      );
                       print('Captured image path: ${image.path}');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

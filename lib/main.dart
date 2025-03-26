@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ichiraku/screens/gallery_screen.dart';
 import 'package:ichiraku/screens/scan.screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/recipe_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/scan': (context) => ScanScreen(),
         // RecipeScreen now gets its arguments via the route settings
         '/recipe': (context) => RecipeScreen(),
+        '/gallery': (context) => GalleryScreen(),
       },
     );
   }
