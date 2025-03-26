@@ -73,8 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('iCiracku: Recipe Finder'),
-        backgroundColor: Colors.green,
+        title: Text('ICiracku'), 
+        backgroundColor: const Color.fromARGB(255, 243, 123, 10),
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -131,11 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           else
             Expanded(
-              child: ListView.builder(
-                itemCount: _recipes.length,
-                itemBuilder: (context, index) => RecipeCard(
-                  title: _recipes[index]['title'],
-                  description: _recipes[index]['summary'],
+                child: ListView.builder(
+                   itemCount: _recipes.length,
+                   itemBuilder: (context, index) => RecipeCard(
+                    title: _recipes[index]['title'] ?? 'No Title Available',
+                   description: _recipes[index]['summary'] ?? 'No Description Available',
                 ),
               ),
             ),

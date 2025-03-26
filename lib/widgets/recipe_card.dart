@@ -4,7 +4,7 @@ class RecipeCard extends StatelessWidget {
   final String title;
   final String description;
 
-  const RecipeCard({super.key, required this.title, required this.description});
+  const RecipeCard({Key? key, required this.title, required this.description}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,13 @@ class RecipeCard extends StatelessWidget {
         title: Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         subtitle: Text(description),
         onTap: () {
-          // You can add navigation to a recipe details page here if needed
+          // Navigate to the Recipe Screen with details
+          Navigator.pushNamed(
+            context,
+            '/recipe',
+            arguments: {'title': title, 
+                        'description': description,},
+          );
         },
       ),
     );
