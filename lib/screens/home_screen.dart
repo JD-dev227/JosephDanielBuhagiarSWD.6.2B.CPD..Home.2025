@@ -1,12 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../widgets/recipe_card.dart';
+import '../services/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+  const HomeScreen({Key? key}) : super(key: key);
+  
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String _errorMessage = '';
   Timer? _debounce;
 
-  // Function to fetch recipes based on the search query
+  // Search recipes with debouncing to avoid frequent API calls.
   void _searchRecipes(String query) async {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () async {
@@ -29,18 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
         });
         return;
       }
-
       setState(() {
         _isLoading = true;
         _errorMessage = '';
       });
-
       try {
         final recipes = await ApiService.fetchRecipes(query);
         setState(() {
           _recipes = recipes;
           _isLoading = false;
         });
+        // Show a local notification with the search results
+        NotificationService().showNotification(
+          title: 'Search Completed',
+          body: 'Found ${recipes.length} recipes for "$query".',
+        );
       } catch (e) {
         setState(() {
           _isLoading = false;
@@ -50,13 +53,20 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  // Clear the search field and results
+  // Clear search text and results.
   void _clearSearch() {
     _searchController.clear();
     setState(() {
       _recipes = [];
       _errorMessage = '';
     });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -100,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SizedBox(height: 10),
-          // Display Loading, Error, or No Results Message
+          // Display Loading, Error, or Results
           if (_isLoading)
             CircularProgressIndicator()
           else if (_errorMessage.isNotEmpty)
@@ -134,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/scan'); // Navigate to Scan Screen
+                Navigator.pushNamed(context, '/scan');
               },
               child: Text("Scan Ingredients"),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
